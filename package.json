@@ -1,0 +1,28 @@
+{
+  "name": "ratingsandreviews",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "testing",
+    "start": "nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SDC-Poutine/RatingsAndReviews.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SDC-Poutine/RatingsAndReviews/issues"
+  },
+  "homepage": "https://github.com/SDC-Poutine/RatingsAndReviews#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "mongoose": "^6.3.0",
+    "pg": "^8.7.3",
+    "pgtools": "^0.3.2"
+  }
+}
