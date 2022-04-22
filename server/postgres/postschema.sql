@@ -1,14 +1,3 @@
--- ---
--- Globals
--- ---
-
--- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
--- SET FOREIGN_KEY_CHECKS=0;
-
--- ---
--- Table characteristic_reviews
---
--- ---
 DROP DATABASE IF EXISTS reviews;
 
 CREATE DATABASE reviews;
@@ -45,13 +34,9 @@ CREATE TABLE characteristic_reviews (
   characteristic_id INTEGER NOT NULL,
   review_id INTEGER NOT NULL,
   value DECIMAL NOT NULL,
-  PRIMARY KEY (id)
-
-  --   id INTEGER NULL AUTO_INCREMENT NOT NULL,
-  -- characteristic_id INTEGER NULL NOT NULL,
-  -- review_id INTEGER NULL NOT NULL,
-  -- value DECIMAL NULL NOT NULL,
-  -- PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  FOREIGN KEY (review_id) REFERENCES reviews (id),
+  FOREIGN KEY (characteristic_id) REFERENCES characteristics (id)
 );
 
 -- ---
@@ -66,11 +51,6 @@ CREATE TABLE characteristics (
   product_id INTEGER NOT NULL,
   name VARCHAR(100) NOT NULL,
   PRIMARY KEY (id)
-
-  --   id INTEGER NULL AUTO_INCREMENT NOT NULL,
-  -- product_id INTEGER NULL NOT NULL,
-  -- name VARCHAR(255) NULL NOT NULL,
-  -- PRIMARY KEY (id)
 );
 
 -- ---
@@ -84,10 +64,9 @@ CREATE TABLE reviews_photos (
   id SERIAL NOT NULL UNIQUE,
   review_id INTEGER NOT NULL,
   url VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  FOREIGN KEY (review_id) REFERENCES reviews (id)
 );
-
-
 
 -- ---
 -- Foreign Keys
@@ -96,6 +75,7 @@ CREATE TABLE reviews_photos (
 ALTER TABLE characteristic_reviews ADD FOREIGN KEY (characteristic_id) REFERENCES characteristics (id);
 ALTER TABLE characteristic_reviews ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
 ALTER TABLE reviews_photos ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
+
 -- ---
 -- Table Properties
 -- ---
