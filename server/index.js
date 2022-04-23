@@ -1,13 +1,11 @@
 const express = require('express');
 const reviews = require('./routes.js');
+require('dotenv').config();
+
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 
-
-
-// app.get('/', (req, res) => {
-//   res.send('In server')
-// })
+app.use(express.json());
 
 app.use('/reviews', reviews);
 

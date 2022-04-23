@@ -34,9 +34,7 @@ CREATE TABLE characteristic_reviews (
   characteristic_id INTEGER NOT NULL,
   review_id INTEGER NOT NULL,
   value DECIMAL NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (review_id) REFERENCES reviews (id),
-  FOREIGN KEY (characteristic_id) REFERENCES characteristics (id)
+  PRIMARY KEY (id)
 );
 
 -- ---
@@ -64,8 +62,7 @@ CREATE TABLE reviews_photos (
   id SERIAL NOT NULL UNIQUE,
   review_id INTEGER NOT NULL,
   url VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (review_id) REFERENCES reviews (id)
+  PRIMARY KEY (id)
 );
 
 -- ---
