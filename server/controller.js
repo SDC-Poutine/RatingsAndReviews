@@ -3,7 +3,16 @@ const postdb = require('./postgres/postdb.js');
 
 module.exports = {
   getReviews: async (req, res) => {
+
     const data = await postdb.getReviews();
-    res.send(data.rows);
+    console.log('req', req)
+    res.send(
+      {
+        // product: 2,
+        // page: 0,
+        // count: 5,
+        results: data.rows
+      }
+);
   },
 }

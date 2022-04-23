@@ -60,11 +60,6 @@ CREATE TABLE characteristics (
   product_id INTEGER NOT NULL,
   name VARCHAR(100) NOT NULL,
   PRIMARY KEY (id)
-
-  --   id INTEGER NULL AUTO_INCREMENT NOT NULL,
-  -- product_id INTEGER NULL NOT NULL,
-  -- name VARCHAR(255) NULL NOT NULL,
-  -- PRIMARY KEY (id)
 );
 
 -- ---
@@ -90,6 +85,7 @@ CREATE TABLE reviews_photos (
 ALTER TABLE characteristic_reviews ADD FOREIGN KEY (characteristic_id) REFERENCES characteristics (id);
 ALTER TABLE characteristic_reviews ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
 ALTER TABLE reviews_photos ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
+
 -- ---
 -- Table Properties
 -- ---
