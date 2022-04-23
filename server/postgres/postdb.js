@@ -14,8 +14,15 @@ pool.connect();
 module.exports = {
   getReviews: async (page, count, sort, product_id) => {
     console.log('IM IN THE DBBBBB', page, count, sort, product_id)
+    if(sort==='relevance') {
+      sort = 'ORDER BY'
+    } else if (sort==='newest') {
+      sort = 'ORDER BY reviews.date DESC'
+    } else if (sort==='helpful') {
+      sort = 'ORDER BY reviews.helpfulness ASC'
+    }
+    console.log('line24', sort);
 
-    
     const query = `
     SELECT reviews.id AS review_id,
       reviews.rating,
