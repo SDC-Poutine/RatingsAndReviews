@@ -12,9 +12,10 @@ const pool = new Pool(credentials)
 pool.connect();
 
 module.exports = {
-  getReviews: async () => {
-    let count = 3;
+  getReviews: async (page, count, sort, product_id) => {
+    console.log('IM IN THE DBBBBB', page, count, sort, product_id)
 
+    
     const query = `
     SELECT reviews.id AS review_id,
       reviews.rating,
@@ -41,7 +42,7 @@ module.exports = {
       ) AS photos
     FROM reviews
       LEFT OUTER JOIN reviews_photos on reviews.id = reviews_photos.review_id
-    WHERE reviews.product_id = 2
+    WHERE reviews.product_id = ${product_id}
     GROUP BY reviews.id
     LIMIT ${count};`
     ;
