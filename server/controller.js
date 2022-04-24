@@ -19,4 +19,13 @@ module.exports = {
       }
     );
   },
+  getMeta: async (req, res) => {
+    res.send('gets all review meta');
+  },
+  postReview: async (req, res) => {
+    const post = await postdb.postReview();
+    res.send('post a review');
+  }
+
+
 }

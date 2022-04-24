@@ -4,13 +4,9 @@ const controller = require('./controller.js')
 
 router.get('/', controller.getReviews)
 
-router.get('/meta', (req, res) => {
-  res.send('gets all review meta');
-})
+router.get('/meta', controller.getMeta)
 
-router.post('/', (req, res) => {
-  res.send('post a review');
-})
+router.post('/', controller.postReview)
 
 router.put('/:review_id/helpful', (req, res) => {
   // router.put('/helpful', (req, res) => {

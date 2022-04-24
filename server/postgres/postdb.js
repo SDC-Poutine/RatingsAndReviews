@@ -14,14 +14,17 @@ pool.connect();
 module.exports = {
   getReviews: async (page, count, sort, product_id) => {
     console.log('IM IN THE DBBBBB', page, count, sort, product_id)
-    if(sort==='relevance') {
-      sort = 'ORDER BY'
-    } else if (sort==='newest') {
-      sort = 'ORDER BY reviews.date DESC'
-    } else if (sort==='helpful') {
-      sort = 'ORDER BY reviews.helpfulness ASC'
+    let sorting;
+    if (sort === 'relevance') {
+      sorting = 'reviews.helpfulness DESC, reviews.date'
+    } else if (sort === 'newest') {
+      sorting = 'reviews.date'
+    } else if (sort === 'helpfulness') {
+      sorting = 'reviews.helpfulness'
     }
-    console.log('line24', sort);
+
+
+    // console.log('line24', sort);
 
     const query = `
     SELECT reviews.id AS review_id,
@@ -49,12 +52,24 @@ module.exports = {
       ) AS photos
     FROM reviews
       LEFT OUTER JOIN reviews_photos on reviews.id = reviews_photos.review_id
-    WHERE reviews.product_id = ${product_id}
+    WHERE reviews.product_id = $2
     GROUP BY reviews.id
-    LIMIT ${count};`
-    ;
+    ORDER BY ${sorting} DESC
+    LIMIT $1
+    ;`
+      ;
+
+    const value = [count, product_id]
+
+    console.log('line58', count)
 
     return await
-      pool.query(query)
+      pool.query(query, value)
+  },
+  getMeta: '',
+  postReview: async () => {
+    return await console.log('test');
+    // const query = ``;
+    // return await pool.query()
   }
 }
