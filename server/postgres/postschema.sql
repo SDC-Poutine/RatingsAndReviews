@@ -76,8 +76,6 @@ CREATE TABLE reviews_photos (
   PRIMARY KEY (id)
 );
 
-
-
 -- ---
 -- Foreign Keys
 -- ---
@@ -85,6 +83,14 @@ CREATE TABLE reviews_photos (
 ALTER TABLE characteristic_reviews ADD FOREIGN KEY (characteristic_id) REFERENCES characteristics (id);
 ALTER TABLE characteristic_reviews ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
 ALTER TABLE reviews_photos ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
+
+-- ---
+-- INDEXING
+-- ---
+CREATE INDEX characteristic_idIndex ON characteristic_reviews(characteristic_id);
+CREATE INDEX review_idCIndex ON characteristic_reviews(review_id);
+CREATE INDEX review_idPIndex ON reviews_photos(review_id);
+CREATE INDEX product_idIndex ON reviews(product_id);
 
 -- ---
 -- Table Properties

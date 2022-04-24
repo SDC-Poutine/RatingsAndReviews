@@ -1,5 +1,6 @@
 -- first review GET request
-EXPLAIN ANALYZE SELECT *
+EXPLAIN ANALYZE
+SELECT *
 FROM reviews
 WHERE product_id = 2;
 -- Planning Time: 0.062 ms
@@ -32,10 +33,7 @@ CREATE INDEX review_idPIndex ON reviews_photos(review_id);
 -- reviews_photos
 --  Planning Time: 0.111 ms
 --  Execution Time: 2245.778 ms
-
 CREATE INDEX product_idIndex ON reviews(product_id);
-
-
 -- GETREVIEWS FORMAT
 SELECT reviews.id AS review_id,
   reviews.rating,
@@ -66,34 +64,33 @@ WHERE reviews.product_id = 2
 GROUP BY reviews.id;
 --  Planning Time: 0.560 ms
 --  Execution Time: 1305.538 ms
-
-    SELECT reviews.id AS review_id,
-      reviews.rating,
-      reviews.summary,
-      reviews.recommend,
-      reviews.response,
-      reviews.body,
-      reviews.date,
-      reviews.reviewer_name,
-      reviews.helpfulness,
-      COALESCE(
-        JSON_agg(
-          json_build_object(
-            'id',
-            reviews_photos.id,
-            'url',
-            reviews_photos.url
-          )
-        ORDER BY reviews_photos.id
-          ) FILTER(
-            WHERE reviews_photos.id IS NOT NULL
-          ),
-          '[]'
-      ) AS photos
-    FROM reviews
-      LEFT OUTER JOIN reviews_photos on reviews.id = reviews_photos.review_id
-    WHERE reviews.product_id = 2
-    GROUP BY reviews.id
-    LIMIT 3;
+SELECT reviews.id AS review_id,
+  reviews.rating,
+  reviews.summary,
+  reviews.recommend,
+  reviews.response,
+  reviews.body,
+  reviews.date,
+  reviews.reviewer_name,
+  reviews.helpfulness,
+  COALESCE(
+    JSON_agg(
+      json_build_object(
+        'id',
+        reviews_photos.id,
+        'url',
+        reviews_photos.url
+      )
+      ORDER BY reviews_photos.id
+    ) FILTER(
+      WHERE reviews_photos.id IS NOT NULL
+    ),
+    '[]'
+  ) AS photos
+FROM reviews
+  LEFT OUTER JOIN reviews_photos on reviews.id = reviews_photos.review_id
+WHERE reviews.product_id = 2
+GROUP BY reviews.id
+LIMIT 3;
 --  Planning Time: 1.946 ms
 --  Execution Time: 4554.418 ms

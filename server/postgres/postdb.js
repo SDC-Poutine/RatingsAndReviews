@@ -60,13 +60,76 @@ module.exports = {
       ;
 
     const value = [count, product_id]
-
-    console.log('line58', count)
-
     return await
       pool.query(query, value)
   },
-  getMeta: '',
+  getMeta: async (product_id) => {
+    const query = `SELECT json_build_object(
+      'product_id',
+      (${product_id}),
+      'ratings',
+      (
+        SELECT json_object_agg(rating, count)
+        FROM (
+            SELECT rating,
+              count(rating) AS count
+            FROM reviews
+            WHERE product_id = $1
+            GROUP BY rating
+          ) a
+      ),
+      'recommended',
+      (
+        SELECT json_object_agg(
+            CAST(
+              CASE
+                WHEN recommend = 'true' THEN 1
+                ELSE 0
+              END as bit
+            ),
+            reccount
+          )
+        FROM (
+            SELECT recommend,
+              count(recommend) as reccount
+            FROM reviews
+            WHERE product_id = $1
+            GROUP BY recommend
+          ) rec
+      ),
+      'characteristics',
+      (
+        SELECT json_object_agg(name, data)
+        FROM (
+            SELECT name,
+              data
+            FROM (
+                SELECT DISTINCT name,
+                  id,
+                  product_id
+                FROM characteristics
+                WHERE product_id = $1
+              ) a
+              LEFT OUTER JOIN (
+                SELECT id,
+                  json_build_object('id', id, 'value', avg) as data
+                FROM(
+                    SELECT characteristic_id as id,
+                      avg(value) as avg
+                    FROM characteristic_reviews
+                    GROUP BY characteristic_id
+                    ORDER BY id
+                  ) obj
+              ) obj ON a.id = obj.id
+          ) f
+      )
+    ) as meta;
+`;
+
+    const value = [product_id]
+    return await
+      pool.query(query, value)
+  },
   postReview: async () => {
     return await console.log('test');
     // const query = ``;
