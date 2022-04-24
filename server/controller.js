@@ -20,10 +20,17 @@ module.exports = {
     );
   },
   getMeta: async (req, res) => {
-    res.send('gets all review meta');
+    const product_id = req.query.product_id;
+
+    const data = await postdb.getMeta(product_id);
+    res.send(data.rows[0].meta
+    );
   },
+
   postReview: async (req, res) => {
+    console.log('req.body', req.body)
     const post = await postdb.postReview();
+
     res.send('post a review');
   }
 
