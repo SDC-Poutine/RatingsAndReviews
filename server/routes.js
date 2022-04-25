@@ -8,14 +8,8 @@ router.get('/meta', controller.getMeta)
 
 router.post('/', controller.postReview)
 
-router.put('/:review_id/helpful', (req, res) => {
-  // router.put('/helpful', (req, res) => {
-  res.send('mark review helpful');
-})
+router.put('/:review_id/helpful', controller.putHelpful)
 
-router.put('/:review_id/report', (req, res) => {
-  // router.put('/report', (req, res) => {
-  res.send('report a review');
-})
+router.put('/:review_id/report', controller.putReport)
 
 module.exports = router;

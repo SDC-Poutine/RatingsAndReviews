@@ -19,20 +19,29 @@ module.exports = {
       }
     );
   },
+
   getMeta: async (req, res) => {
     const product_id = req.query.product_id;
 
     const data = await postdb.getMeta(product_id);
-    res.send(data.rows[0].meta
-    );
+    res.send(data.rows[0].meta);
   },
 
   postReview: async (req, res) => {
     console.log('req.body', req.body)
     const post = await postdb.postReview();
-
     res.send('post a review');
+  },
+
+  putHelpful: async (req, res) => {
+    const review_id = req.params.review_id;
+    const data = await postdb.putHelpful(review_id);
+    res.send('Review marked helpful!')
+  },
+
+  putReport: async (req, res) => {
+    const review_id = req.params.review_id;
+    const data = await postdb.putReport(review_id);
+    res.send('Review reported!')
   }
-
-
 }

@@ -92,6 +92,7 @@ CREATE INDEX review_idCIndex ON characteristic_reviews(review_id);
 CREATE INDEX review_idPIndex ON reviews_photos(review_id);
 CREATE INDEX product_idIndex ON reviews(product_id);
 
+CREATE INDEX CnameIndex ON characteristics(name);
 -- ---
 -- Table Properties
 -- ---

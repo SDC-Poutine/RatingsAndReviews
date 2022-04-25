@@ -23,11 +23,9 @@ module.exports = {
       sorting = 'reviews.helpfulness'
     }
 
-
-    // console.log('line24', sort);
-
     const query = `
     SELECT reviews.id AS review_id,
+    reviews.reported,
       reviews.rating,
       reviews.summary,
       reviews.recommend,
@@ -132,7 +130,25 @@ module.exports = {
   },
   postReview: async () => {
     return await console.log('test');
-    // const query = ``;
-    // return await pool.query()
+  },
+  putHelpful: async (review_id) => {
+    const query = `
+    UPDATE reviews
+    SET helpfulness = helpfulness + 1
+    WHERE id=$1;
+    `
+    const value = [review_id]
+    return await
+      pool.query(query, value)
+  },
+  putReport: async (review_id) => {
+    const query = `
+    UPDATE reviews
+    SET reported = true
+    WHERE id=$1;
+    `
+    const value = [review_id]
+    return await
+      pool.query(query, value)
   }
 }

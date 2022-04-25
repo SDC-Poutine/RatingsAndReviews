@@ -34,6 +34,7 @@ CREATE INDEX review_idPIndex ON reviews_photos(review_id);
 --  Planning Time: 0.111 ms
 --  Execution Time: 2245.778 ms
 CREATE INDEX product_idIndex ON reviews(product_id);
+CREATE INDEX cproduct_idIndex ON characteristics(product_id);
 -- GETREVIEWS FORMAT
 SELECT reviews.id AS review_id,
   reviews.rating,
