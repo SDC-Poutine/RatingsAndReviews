@@ -97,29 +97,14 @@ module.exports = {
       ),
       'characteristics',
       (
-        SELECT json_object_agg(name, data)
-        FROM (
-            SELECT name,
-              data
-            FROM (
-                SELECT DISTINCT name,
-                  id,
-                  product_id
-                FROM characteristics
-                WHERE product_id = $1
-              ) a
-              LEFT OUTER JOIN (
-                SELECT id,
-                  json_build_object('id', id, 'value', avg) as data
-                FROM(
-                    SELECT characteristic_id as id,
-                      avg(value) as avg
-                    FROM characteristic_reviews
-                    GROUP BY characteristic_id
-                    ORDER BY id
-                  ) obj
-              ) obj ON a.id = obj.id
-          ) f
+        SELECT json_object_agg(i.name, idVal )
+        FROM
+        (SELECT c.product_id, c.name, json_build_object('id', cr.characteristic_id, 'value', avg(cr.value))as idVal
+        FROM characteristics c
+        LEFT JOIN characteristic_reviews cr
+        on c.id=cr.characteristic_id
+        WHERE product_id = $1
+        GROUP BY c.product_id, c.name, cr.characteristic_id)i
       )
     ) as meta;
 `;

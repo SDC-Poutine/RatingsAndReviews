@@ -20,8 +20,8 @@ export default function () {
 
   const responses = http.batch([
     ['GET', `${BASE_URL}?product_id=1000011`],
-    // ['GET', `${BASE_URL}/meta?product_id=1000011`],
+    ['GET', `${BASE_URL}/meta?product_id=1000011`]
   ]);
 
-  sleep(0.1);
+  sleep(1);
 }

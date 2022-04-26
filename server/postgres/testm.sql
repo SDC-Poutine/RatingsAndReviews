@@ -73,7 +73,7 @@ FROM (
           ) obj
       ) obj ON a.id = obj.id
   ) f;
--- FINAL META COMBINED
+-- fisrt META COMBINED
 SELECT json_build_object(
     'product_id',
     ('test'),
@@ -131,68 +131,4 @@ SELECT json_build_object(
         ) obj ON a.id = obj.id
     )
   ) as meta;
-
-
-
-EXPLAIN ANALYZE
-  SELECT json_build_object(
-      'ratings',
-      (
-        SELECT json_object_agg(rating, count)
-        FROM (
-            SELECT rating,
-              count(rating) AS count
-            FROM reviews
-            WHERE product_id = 900000
-            GROUP BY rating
-          ) a
-      ),
-      'recommended',
-      (
-        SELECT json_object_agg(
-            CAST(
-              CASE
-                WHEN recommend = 'true' THEN 1
-                ELSE 0
-              END as bit
-            ),
-            reccount
-          )
-        FROM (
-            SELECT recommend,
-              count(recommend) as reccount
-            FROM reviews
-            WHERE product_id = 900000
-            GROUP BY recommend
-          ) rec
-      ),
-      'characteristics',
-      (
-        SELECT json_object_agg(name, data)
-        FROM (
-            SELECT name,
-              data
-            FROM (
-                SELECT name,
-                  id,
-                  product_id
-                FROM characteristics
-                WHERE product_id = 900000
-              ) a
-              LEFT OUTER JOIN (
-                SELECT characteristic_id,
-                  json_build_object('id', characteristic_id, 'value', avg) as data
-                FROM(
-                    SELECT characteristic_id,
-                      avg(value) as avg
-                    FROM characteristic_reviews
-                    GROUP BY characteristic_id
-                  ) i
-              ) obj
-              ON a.id = obj.characteristic_id
-          ) f
-      )
-    ) as meta;
-
-
-    
+-- join first 
