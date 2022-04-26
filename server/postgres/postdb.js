@@ -56,11 +56,11 @@ module.exports = {
     LIMIT $1
     ;`
       ;
-
     const value = [count, product_id]
     return await
       pool.query(query, value)
   },
+
   getMeta: async (product_id) => {
     const query = `SELECT json_build_object(
       'product_id',
@@ -128,8 +128,26 @@ module.exports = {
     return await
       pool.query(query, value)
   },
-  postReview: async () => {
-    return await console.log('test');
+  postReview: async (data) => {
+    // post params
+    const product_id = data.product_id;
+    const rating = data.rating;
+    const summary = data.summary;
+    const body = data.body;
+    const recommend = data.recommend;
+    const reviewer_name = data.name;
+    const reviewer_email = data.email;
+    const photos = data.photos;
+    const characteristics = data.characteristics;
+
+    // need in query to insert
+    // const date = GETDATE()
+    const reported = false;
+    // const response = data.response;
+    const helpfulness = 0;
+
+    console.log('product_id: ', product_id, 'rating: ',rating, 'summary: ',summary, 'body: ', body, 'recommend: ',recommend, 'reported: ',reported, 'reviewer_name: ',reviewer_name, 'email: ',reviewer_email, 'helpfulness: ',helpfulness, 'photos: ',photos, 'characteristics: ',characteristics)
+    return await console.log('');
   },
   putHelpful: async (review_id) => {
     const query = `

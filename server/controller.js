@@ -5,7 +5,7 @@ module.exports = {
   getReviews: async (req, res) => {
     const page = +req.query.page || 0;
     const count = +req.query.count || 5;
-    const sort = req.query.sort;
+    const sort = req.query.sort || 'relevance';
     const product_id = req.query.product_id;
 
     const data = await postdb.getReviews(page, count, sort, product_id);
@@ -22,14 +22,12 @@ module.exports = {
 
   getMeta: async (req, res) => {
     const product_id = req.query.product_id;
-
     const data = await postdb.getMeta(product_id);
     res.send(data.rows[0].meta);
   },
 
   postReview: async (req, res) => {
-    console.log('req.body', req.body)
-    const post = await postdb.postReview();
+    const post = await postdb.postReview(req.body);
     res.send('post a review');
   },
 
