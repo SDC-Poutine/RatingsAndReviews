@@ -131,8 +131,11 @@ module.exports = {
     // const response = data.response;
     const helpfulness = 0;
 
-    console.log('product_id: ', product_id, 'rating: ',rating, 'summary: ',summary, 'body: ', body, 'recommend: ',recommend, 'reported: ',reported, 'reviewer_name: ',reviewer_name, 'email: ',reviewer_email, 'helpfulness: ',helpfulness, 'photos: ',photos, 'characteristics: ',characteristics)
-    return await console.log('');
+    // console.log('product_id: ', product_id, 'rating: ',rating, 'summary: ',summary, 'body: ', body, 'recommend: ',recommend, 'reported: ',reported, 'reviewer_name: ',reviewer_name, 'email: ',reviewer_email, 'helpfulness: ',helpfulness, 'photos: ',photos, 'characteristics: ',characteristics)
+    const query = ``;
+
+    return await
+      pool.query(query)
   },
   putHelpful: async (review_id) => {
     const query = `
